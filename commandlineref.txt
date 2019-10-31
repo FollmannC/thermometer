@@ -1,0 +1,13 @@
+pi@raspberrypi:~ $ modprobe w1-gpio
+pi@raspberrypi:~ $ sudo modprobe w1-therm
+pi@raspberrypi:~ $ cd /sys/bus/w1/devices
+pi@raspberrypi:/sys/bus/w1/devices $ ls
+28-0000093e6d33  w1_bus_master1
+pi@raspberrypi:/sys/bus/w1/devices $ cd 28-0000093e6d33
+pi@raspberrypi:/sys/bus/w1/devices/28-0000093e6d33 $ cat w1_slave70 01 4b 46 7f ff 10 10 e1 : crc=e1 YES
+70 01 4b 46 7f ff 10 10 e1 t=23000
+pi@raspberrypi:/sys/bus/w1/devices/28-0000093e6d33 $ awk '{printf("%.1f°F\n",(($1*1.8)/1e3)+32)}' /sys/class/thermal/thermal_zone0/temp
+125.7°F
+
+
+https://thepihut.com/blogs/raspberry-pi-tutorials/ds18b20-one-wire-digital-temperature-sensor-and-the-raspberry-pi
